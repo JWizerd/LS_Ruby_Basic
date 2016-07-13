@@ -7,16 +7,15 @@ def prompt(message)
   puts("=> #{message}")
 end
 
+prompt('Welcome to CalculatorFunTimes!')
+
 def valid_number?(num)
   num.to_i != 0
 end
 
-number1 = ''
-number2 = ''
-
 def game
-
-  prompt('Welcome to CalculatorFunTimes!')
+  number1 = ''
+  number2 = ''
 
   loop do 
       prompt("please enter a number")
