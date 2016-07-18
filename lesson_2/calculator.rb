@@ -9,25 +9,27 @@ end
 
 prompt('Welcome to CalculatorFunTimes!')
 
-def valid_number?(num)
-  num.to_i != 0
-end
+answer = 'yes'
+while answer == 'yes'
 
-def game
+  def valid_number?(num)
+    num.to_i != 0
+  end
+
   number1 = ''
   number2 = ''
 
-  loop do 
-      prompt("please enter a number")
-      number1 = gets.chomp
-      if valid_number?(number1)
-        break
-      else
-        prompt("that's not a valid number")
+  loop do
+    prompt("please enter a number")
+    number1 = gets.chomp
+    if valid_number?(number1)
+      break
+    else
+      prompt("that's not a valid number")
     end
   end
 
-  loop do 
+  loop do
     prompt("please enter another number")
     number2 = gets.chomp
     if valid_number?(number2)
@@ -37,43 +39,33 @@ def game
     end
   end
 
-  prompt("what operation would you like to perform with these numbers? please enter one of the following: + - * /")
+  prompt("what operation would you like to perform with these numbers?")
+  prompt("please enter one of the following: + - * /")
 
-  loop do  
+  loop do
     operation = gets.chomp
     if operation.include?('+') || operation.include?('-') || operation.include?('*') || operation.include?('/')
 
-      result = case operation
-      when '+'
-        result = number1.to_i + number2.to_i
-      when '-'
-        result = number1.to_i - number2.to_i
-      when '*'
-        result = number1.to_i * number2.to_i
-      when '/'
-        result = number1.to_f / number2.to_f  
-      end
-        
+      result =  case operation
+                when '+'
+                  number1.to_i + number2.to_i
+                when '-'
+                  number1.to_i - number2.to_i
+                when '*'
+                  number1.to_i * number2.to_i
+                when '/'
+                  number1.to_f / number2.to_f
+                end
+
       prompt("result = #{result}")
       break
     else
-      prompt("please enter a valid operation")  
-   end
+      prompt("please enter a valid operation")
+    end
   end
-end 
-# end game loop
+  prompt("play again?")
+  answer = gets.chomp.to_s.downcase
 
-def play
-  answer = 'yes'
-  while answer == 'yes'
-    game
-    prompt("play again?")
-    answer = gets.chomp.to_s.downcase
-  end
-  prompt("Thanks for playing! Goodbye!")
 end
 
-play
-
-
-
+prompt("Thanks for playing! Goodbye!")
