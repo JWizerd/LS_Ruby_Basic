@@ -4,7 +4,7 @@
 # amortize a loan of L dollars over a term of n months at a monthly interest rate of c. 
 # [If the quoted rate is 6%, for example, c is .06/12 or .005]
 
-# EQUATION: P = L[c(1 + c)**n]/[(1 + c)**n - 1] 
+# EQUATION: P = L[c(1 + c)**n]/[(1 + c)**n - 1]
 # P = fixed monthly payment
 # L = loan amount
 # c = interest rate
@@ -34,7 +34,7 @@ while answer == "yes"
 
   puts "The loan amount:"
   l_amount = ''
-  loop do 
+  loop do
     l_amount = gets.chomp
     if l_amount.to_i <= 0 || l_amount.empty?
       puts "enter a positive number."
@@ -46,7 +46,7 @@ while answer == "yes"
 
   puts "The Annual Percentage Rate (APR)"
   apr = ''
-  loop do 
+  loop do
     apr = gets.chomp
     if apr.to_f <= 0 || apr.empty?
       puts "enter a positive number."
@@ -58,7 +58,7 @@ while answer == "yes"
 
   puts "The loan duration in years"
   l_duration = ''
-  loop do 
+  loop do
     l_duration = gets.chomp
     if l_duration.to_i <= 0 || l_duration.empty?
       puts "enter a positive number."
@@ -68,20 +68,19 @@ while answer == "yes"
     end
   end
 
-  #calculate interest rates and monthly mortgage payments
+  # calculate interest rates and monthly mortgage payments
   duration_months = l_duration * 12
   annual_interest_rate = apr / 100
   monthly_interest_rate = annual_interest_rate / 12
   monthly_payment = l_amount * (monthly_interest_rate * (1 + monthly_interest_rate)**duration_months) / ((1 + monthly_interest_rate)**duration_months - 1)
 
-  #calculate how long it will take them pay off loan in months
-  duration_pay_off  = l_amount / monthly_payment
+  # calculate how long it will take them pay off loan in months
+  duration_pay_off = l_amount / monthly_payment
 
   puts "Your monthly payment is: $#{monthly_payment.to_i} and it will take you #{duration_pay_off.to_i} months to pay off your loan."
-    
+
   prompt("Would you like to run another calculation? Answer 'yes' or 'no'")
   answer = gets.chomp.downcase
 end
 
 puts "thanks for playing! Goodbye!"
-
