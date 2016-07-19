@@ -19,14 +19,17 @@ def prompt(message)
   puts "==== #{message}"
 end
 
-def valid_input?
-  loop do
-    val = gets.chomp
-    if val.to_f <= 0 || val.empty?
-      prompt('enter a positive number.')
-    else
-      return val.to_f
-    end
+def valid_input?(value)
+  value.to_f <= 0 || value.empty? ? false : true
+end
+
+def valid_return_value
+  value = gets.chomp
+  if valid_input?(value)
+    return value.to_f
+  else
+    prompt("enter a positive number")
+    valid_return_value
   end
 end
 
@@ -46,13 +49,13 @@ while answer == "yes"
   puts "\r\nPlease enter the following information:"
 
   puts "The loan amount:"
-  loan_amount = valid_input?
+  loan_amount = valid_return_value
 
   puts "The Annual Percentage Rate (APR)"
-  apr = valid_input?
+  apr = valid_return_value
 
   puts "The loan duration in years"
-  loan_duration = valid_input?
+  loan_duration = valid_return_value
 
   # calculate interest rates and monthly mortgage payments
   duration_months = loan_duration * 12
