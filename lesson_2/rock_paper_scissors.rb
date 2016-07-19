@@ -5,56 +5,63 @@
 # - the computer makes a choice
 # - the winnder is displayed
 
-# Things to consider:
-# - how is the logic going to look to decide which one is the winner (rock crushes scissor etc.)
-# - ROCK BEATS SCISSORS, SCISSORS BEATS PAPER, PAPER BEATS ROCK
+VALID_CHOICES = %w(rock paper scissors)
 
-VALID_CHOICES = ['rock', 'paper', 'scissors']
-
+# GAME LOGIC
 def prompt(message)
   puts "===== #{message}"
 end
 
+def display_result(player, computer)
+  if computer == 'scissors' && player == 'rock'
+    prompt("You chose #{player}; Computer chose #{computer}.")
+    prompt("YOU WIN")
+  elsif computer == 'rock' && player == 'scissors'
+    prompt("You chose #{player}; Computer chose #{computer}.")
+    prompt("YOU LOSE")
+  elsif computer == 'paper' && player == 'scissors'
+    prompt("You chose #{player}; Computer chose #{computer}.")
+    prompt("YOU WIN")
+  elsif computer == 'scissors' && player == 'paper'
+    prompt("You chose #{player}; Computer #{computer}.")
+    prompt("YOU LOSE")
+  elsif computer == 'rock' && player == 'paper'
+    prompt("You chose #{player}; Computer chose #{computer}.")
+    prompt("YOU WIN")
+  elsif computer == 'paper' && player == 'rock'
+    prompt("You chose #{player}; Computer chose #{computer}.")
+    prompt("YOU LOSE")
+  else
+    prompt("You chose #{player}; Computer chose #{computer}. TYE!")
+  end
+end
+
+def valid_input?(value)
+  VALID_CHOICES.include?(value) ? true : false
+end
+
+def valid_choice
+  value = gets.chomp
+  if valid_input?(value)
+    return value
+  else
+    prompt("Not valid input. Try again.")
+    valid_choice
+  end
+end
+
+# GAME LOOP
 loop do
   prompt("choose one:  #{VALID_CHOICES.join(', ')}")
 
-  choice = ''
-  loop do
-    choice = gets.chomp.downcase
-    if VALID_CHOICES.include?(choice)
-      break
-    else
-      prompt('Not a valid input. Try again.')
-    end
-  end
+  choice = valid_choice
 
   computer_choice = VALID_CHOICES.sample
 
-  if computer_choice == 'scissors' && choice == 'rock'
-    prompt("You chose #{choice}; Computer chose #{computer_choice}.")
-    prompt("YOU WIN")
-  elsif computer_choice == 'rock' && choice == 'scissors'
-    prompt("You chose #{choice}; Computer chose #{computer_choice}.")
-    prompt("YOU LOSE")
-  elsif computer_choice == 'paper' && choice == 'scissors'
-    prompt("You chose #{choice}; Computer chose #{computer_choice}.")
-    prompt("YOU WIN")
-  elsif computer_choice == 'scissors' && choice == 'paper'
-    prompt("You chose #{choice}; Computer chose #{computer_choice}.")
-    prompt("YOU LOSE")
-  elsif computer_choice == 'rock' && choice == 'paper'
-    prompt("You chose #{choice}; Computer chose #{computer_choice}.")
-    prompt("YOU WIN")
-  elsif computer_choice == 'paper' && choice == 'rock'
-    prompt("You chose #{choice}; Computer chose #{computer_choice}.")
-    prompt("YOU LOSE")
-  else
-    prompt("You chose #{choice}; Computer chose #{computer_choice}. TYE!")
-  end
+  display_result(choice, computer_choice)
 
   puts "Play Again? Answer 'yes' or 'no'"
-  answer = gets.chomp
-
+  answer = gets.chomp.downcase
   break unless answer == "yes"
 end
 
