@@ -15,15 +15,15 @@ def prompt(message)
 end
 
 def win?(player1, player2)
-  player2 == 'scissors' && player1 == 'rock' || 
-  player2 == 'paper' && player1 == 'scissors' || 
-  player2 == 'rock' && player1 == 'paper'
+  player2 == 'scissors' && player1 == 'rock' ||
+    player2 == 'paper' && player1 == 'scissors' ||
+    player2 == 'rock' && player1 == 'paper'
 end
 
 def lose?(player1,  player2)
-  player2 == 'rock' && player1 == 'scissors' || 
-  player2 == 'scissors' && player1 == 'paper' ||
-  player2 == 'paper' && player1 == 'rock'
+  player2 == 'rock' && player1 == 'scissors' ||
+    player2 == 'scissors' && player1 == 'paper' ||
+    player2 == 'paper' && player1 == 'rock'
 end
 
 def display_result(player, computer)
@@ -42,7 +42,7 @@ end
 def score_keeper(player, computer)
   if win?(player, computer)
     @player_score += 1
-  elsif lose?(player,computer)
+  elsif lose?(player, computer)
     @computer_score += 1
   end
 end
@@ -74,7 +74,7 @@ def game_loop
     computer_choice = VALID_CHOICES.sample
     score_keeper(choice, computer_choice)
     display_result(choice, computer_choice)
-    prompt("Player Score: #{@player_score} | Computer Score: #{@computer_score}")
+    prompt("Player: #{@player_score} | Computer: #{@computer_score}")
   end
 end
 
