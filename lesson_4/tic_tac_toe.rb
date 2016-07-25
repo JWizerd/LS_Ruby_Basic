@@ -1,25 +1,14 @@
-# Tic Tac Toe 
-# 1. Welcome, display board
-# 2. Ask user for input
-# 3. check to see if place is taken. else, put user in space.
-# 4. computer randomly puts in places that are not already occupied.
-# 5. check for winner. 3 in a row ELSE tye.
-# 6. play again? if 'yes' loop to #2 else close app
-
 require 'pry'
 
-INITIAL_MARKER = ' '
-PLAYER_MARKER = 'X'
-COMPUTER_MARKER = 'O'
+INITIAL_MARKER = ' '.freeze
+PLAYER_MARKER = 'X'.freeze
+COMPUTER_MARKER = 'O'.freeze
 
 def initialize_board
   new_board = {}
-  (1..9).each {|num| new_board[num] = INITIAL_MARKER}
+  (1..9).each { |num| new_board[num] = INITIAL_MARKER }
   new_board
 end
-
-# the initialize_board method creates a hash new_board and then populates it with 0..9 keys to represent our board.
-# we then set the new_board hash as the value of the board variable so we can access it globally within all methods.
 
 def prompt(msg)
   puts "=> #{msg}"
@@ -38,7 +27,7 @@ def display_board(brd)
 end
 
 def empty_squares(brd)
-  brd.keys.select {|num| brd[num] == INITIAL_MARKER}
+  brd.keys.select { |num| brd[num] == INITIAL_MARKER }
 end
 
 def board_full?(brd)
@@ -46,21 +35,22 @@ def board_full?(brd)
 end
 
 def detect_winner(brd)
-  winning_lines = [[1,2,3], [4,5,6], [7,8,9]] + 
-                  [[1,4,7], [2,5,8], [3,6,9]] +
-                  [[1,5,9], [3,5,7]]
+  winning_lines = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
+                  [[1, 4, 7], [2, 5, 8], [3, 6, 9]] +
+                  [[1, 5, 9], [3, 5, 7]]
+                  
   winning_lines.each do |line|
-    if brd[line[0]] == PLAYER_MARKER && 
-       brd[line[1]] == PLAYER_MARKER && 
+    if brd[line[0]] == PLAYER_MARKER &&
+       brd[line[1]] == PLAYER_MARKER &&
        brd[line[2]] == PLAYER_MARKER
       return "Player"
-    elsif brd[line[0]] == COMPUTER_MARKER && 
-       brd[line[1]] == COMPUTER_MARKER && 
-       brd[line[2]] == COMPUTER_MARKER
-       return "Computer"
+    elsif brd[line[0]] == COMPUTER_MARKER &&
+          brd[line[1]] == COMPUTER_MARKER &&
+          brd[line[2]] == COMPUTER_MARKER
+      return "Computer"
     end
   end
-  nil # IMPORTANT: when returned nil this signifies that nobody has won yet.
+  nil
 end
 
 def someone_won?(brd)
@@ -72,9 +62,7 @@ def player_places_piece!(brd)
   loop do
     prompt("Please enter a number (1-9)")
     prompt("Choose a square #{empty_squares(brd).join(', ')}")
-    square = gets.chomp.to_i 
-    # we have to check to see if a given space is taken. to do so, we can iterate through keys (like below)
-    # and check IF values of board keys are equal to ' ' break loop. If not ask for user to input another number/space
+    square = gets.chomp.to_i
     if empty_squares(brd).include?(square)
       break
     else

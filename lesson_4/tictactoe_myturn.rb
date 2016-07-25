@@ -1,11 +1,3 @@
-# Tic Tac Toe 
-# 1. Welcome, display board
-# 2. Ask user for input
-# 3. check to see if place is taken. else, put user in space.
-# 4. computer randomly puts in places that are not already occupied.
-# 5. check for winner. 3 in a row ELSE tye.
-# 6. play again? if 'yes' loop to #2 else close app
-
 INITIAL_MARKER = ' '
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
