@@ -76,30 +76,39 @@ def winner_message(player_cards, dealer_cards)
   end
 end
 
-deck = initialize_deck
-player_cards = deck.sample(2)
-dealer_cards = deck.sample(2)
-puts "====================="
-puts "Welcome to Twenty One"
-puts "====================="
-prompt("Here are your cards:")
-puts "#{player_cards}"
-prompt("Would you like to hit or stay?")
-hit_or_stay = gets.chomp.downcase
-if hit_or_stay == "hit" || hit_or_stay == "h"
-  hit(player_cards)
-  total(player_cards)
-  puts "Total is: #{total(player_cards)}"
-  if busted?(player_cards)
-    prompt("BUSTED! Dealer Wins!")
+answer = "yes"
+loop do 
+  system "clear"
+  deck = initialize_deck
+  player_cards = deck.sample(2)
+  dealer_cards = deck.sample(2)
+  puts "====================="
+  puts "Welcome to Twenty One"
+  puts "====================="
+  prompt("Here are your cards:")
+  puts "#{player_cards}"
+  prompt("Would you like to hit or stay?")
+  hit_or_stay = gets.chomp.downcase
+  if hit_or_stay == "hit" || hit_or_stay == "h"
+    hit(player_cards)
+    total(player_cards)
+    puts "#{player_cards}"
+    puts "Total is: #{total(player_cards)}"
+    if busted?(player_cards)
+      prompt("BUSTED! Dealer Wins!")
+    end
+  elsif hit_or_stay == "stay" || hit_or_stay == "s"
+    prompt("Dealer's turn!")
+    prompt("Dealer's Cards Are:")
+    puts "#{dealer_cards[0]} and ?" 
+    hit(dealer_cards)
+    total(dealer_cards)
+    if busted?(dealer_cards)
+      prompt("BUSTED! Player Wins!")
+    end
   end
-elsif hit_or_stay == "stay" || hit_or_stay == "s"
-  prompt("Dealer's turn!")
-  prompt("Dealer's Cards Are:")
-  puts "#{dealer_cards[0]} and ?" 
-  hit(dealer_cards)
-  total(dealer_cards)
-  if busted?(dealer_cards)
-    prompt("BUSTED! Player Wins!")
-  end
+  prompt("PLAY AGAIN?")
+  answer = gets.chomp.downcase
+break unless answer == "yes"
 end
+prompt("Thanks for playing!")
