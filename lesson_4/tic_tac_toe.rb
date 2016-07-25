@@ -3,6 +3,8 @@ require 'pry'
 INITIAL_MARKER = ' '.freeze
 PLAYER_MARKER = 'X'.freeze
 COMPUTER_MARKER = 'O'.freeze
+$player_score = 0
+$computer_score = 0
 
 def initialize_board
   new_board = {}
@@ -15,7 +17,6 @@ def prompt(msg)
 end
 
 def display_board(brd)
-  system 'clear'
   puts "================="
   puts "TIC TAC TOE-MATER"
   puts "================="
@@ -38,15 +39,18 @@ def detect_winner(brd)
   winning_lines = [[1, 2, 3], [4, 5, 6], [7, 8, 9]] +
                   [[1, 4, 7], [2, 5, 8], [3, 6, 9]] +
                   [[1, 5, 9], [3, 5, 7]]
-                  
+
   winning_lines.each do |line|
     if brd[line[0]] == PLAYER_MARKER &&
        brd[line[1]] == PLAYER_MARKER &&
        brd[line[2]] == PLAYER_MARKER
+       binding.pry
+      $player_score += 1
       return "Player"
     elsif brd[line[0]] == COMPUTER_MARKER &&
           brd[line[1]] == COMPUTER_MARKER &&
           brd[line[2]] == COMPUTER_MARKER
+      $computer_score += 1
       return "Computer"
     end
   end
@@ -79,7 +83,7 @@ end
 
 # GAME LOOP
 answer = 'yes'
-loop do
+until $player_score == 5 || $computer_score == 5
   board = initialize_board
 
   loop do
@@ -94,14 +98,14 @@ loop do
 
   if someone_won?(board)
     display_board(board)
-    prompt "#{detect_winner(board)} won!"
+    prompt "PLAYER SCORE: #{$player_score} \r\n COMPUTER SCORE: #{$computer_score}"
   else
     prompt("It's a TYE!")
     display_board(board)
   end
-
-  prompt("PLAY AGAIN?")
-  answer = gets.chomp
-break unless answer == 'yes'
 end
-prompt("THANKS FOR PLAYING! GOODBYE!")
+if $computer_score == 5
+  prompt "computer won!"
+elsif $player_score == 5
+  prompt "player won!"
+end
