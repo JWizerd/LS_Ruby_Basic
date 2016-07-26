@@ -76,39 +76,40 @@ def winner_message(player_cards, dealer_cards)
   end
 end
 
-answer = "yes"
-loop do 
-  system "clear"
-  deck = initialize_deck
-  player_cards = deck.sample(2)
-  dealer_cards = deck.sample(2)
-  puts "====================="
-  puts "Welcome to Twenty One"
-  puts "====================="
-  prompt("Here are your cards:")
-  puts "#{player_cards}"
-  prompt("Would you like to hit or stay?")
-  hit_or_stay = gets.chomp.downcase
-  if hit_or_stay == "hit" || hit_or_stay == "h"
-    hit(player_cards)
-    total(player_cards)
-    puts "#{player_cards}"
-    puts "Total is: #{total(player_cards)}"
-    if busted?(player_cards)
-      prompt("BUSTED! Dealer Wins!")
+# initialize vars
+deck = initialize_deck
+player_cards = []
+dealer_cards = []
+
+# initial deal
+player_cards = deck.sample(2)
+dealer_cards = deck.sample(2)
+
+prompt "Dealer has #{dealer_cards[0]} and ?"
+prompt "You have: #{player_cards[0]} and #{player_cards[1]}, for a total of #{total(player_cards)}."
+
+  # player turn
+  loop do
+    player_turn = nil
+    loop do
+      prompt "Would you like to (h)it or (s)tay?"
+      player_turn = gets.chomp.downcase
+      break if ['h', 's'].include?(player_turn)
+      prompt "Sorry, must enter 'h' or 's'."
     end
-  elsif hit_or_stay == "stay" || hit_or_stay == "s"
-    prompt("Dealer's turn!")
-    prompt("Dealer's Cards Are:")
-    puts "#{dealer_cards[0]} and ?" 
-    hit(dealer_cards)
-    total(dealer_cards)
-    if busted?(dealer_cards)
-      prompt("BUSTED! Player Wins!")
+
+    if player_turn == 'h'
+      player_cards << deck.pop
+      prompt "You chose to hit!"
+      prompt "Your cards are now: #{player_cards}"
+      prompt "Your total is now: #{total(player_cards)}"
     end
+
+    break if player_turn == 's' || busted?(player_cards)
   end
-  prompt("PLAY AGAIN?")
-  answer = gets.chomp.downcase
-break unless answer == "yes"
-end
-prompt("Thanks for playing!")
+
+  if busted?(player_cards)
+    winner_message(dealer_cards, player_cards)
+  else
+    prompt "You stayed at #{total(player_cards)}"
+  end
