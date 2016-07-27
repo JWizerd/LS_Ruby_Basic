@@ -2,6 +2,7 @@
 
 require 'pry'
 
+TOTAL_TO_WIN = 21
 SUITS = ['H', 'D', 'S', 'C'].freeze
 VALUES = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'].freeze
 
@@ -28,7 +29,7 @@ def total(cards)
 
   # Accounting for Ace's
   values.select { |value| value == "A" }.count.times do
-    if sum > 21
+    if sum > TOTAL_TO_WIN
       sum -= 10
     end
   end
@@ -48,9 +49,9 @@ end
 def winner(player, dealer)
   player_total = total(player)
   dealer_total = total(dealer)
-  if player_total > 21
+  if player_total > TOTAL_TO_WIN
     :player_busted
-  elsif dealer_total > 21
+  elsif dealer_total > TOTAL_TO_WIN
     :dealer_busted
   elsif player_total > dealer_total
     :player
@@ -102,7 +103,7 @@ def dealer_turn(player, dealer)
   prompt "Dealer's Turn:"
 
   loop do
-    break if busted?(dealer) || total(dealer) >= 17
+    break if busted?(dealer) || total(dealer) >= (TOTAL_TO_WIN - 4)
     prompt "DEALER HITS!"
     hit(dealer)
     prompt "Dealer's new total is #{total(dealer)}"
