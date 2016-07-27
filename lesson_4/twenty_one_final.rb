@@ -41,7 +41,7 @@ def busted?(cards)
 end
 
 def hit(cards_dealt)
-  deck = initialize_deck
+  deck = SUITS.product(VALUES).shuffle
   cards_dealt << deck.sample # add another card to your hand
 end
 
@@ -86,7 +86,6 @@ def player_turn(player, dealer)
 
     if hit_or_stay == 'hit'
       hit(player)
-      total(player)
       busted?(player)
       prompt "Your new total is #{total(player)}"
       compare_cards(player, dealer)
@@ -106,7 +105,6 @@ def dealer_turn(player, dealer)
     break if busted?(dealer) || total(dealer) >= 17
     prompt "DEALER HITS!"
     hit(dealer)
-    total(dealer)
     prompt "Dealer's new total is #{total(dealer)}"
   end
   compare_cards(player, dealer)
@@ -115,7 +113,6 @@ end
 
 def compare_cards(player, dealer)
   prompt "Player Total: #{total(player)} Dealer Total: #{total(dealer)}"
-  winner(player, dealer)
 end
 
 def play_again?
@@ -136,16 +133,16 @@ loop do
   puts "======================"
 
   # PLAYER TURN
-  player_turn(player_cards, dealer_cards)
-  if busted?(player_cards)
-    play_again? ? next : break
+  if busted?(dealer_cards) == false
+    player_turn(player_cards, dealer_cards)
+    if busted?(player_cards)
+      play_again? ? next : break
+    end
   end
-
   # DEALER TURN
   dealer_turn(player_cards, dealer_cards)
-  if winner(player_cards, dealer_cards)
-    play_again? ? next : break
-  end
 
   break unless play_again?
 end
+
+prompt "THANKS FOR PLAYING! GOODBYE!"
